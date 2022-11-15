@@ -3,11 +3,15 @@ package ru.jdbc.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.jdbc.project.DAO.BookDAO;
 import ru.jdbc.project.DAO.PersonDAO;
 import ru.jdbc.project.model.Book;
 import ru.jdbc.project.model.Person;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 //это контроллер
@@ -39,6 +43,16 @@ public class BookController {
                           Person person /*что внедряем*/) {
         model.addAttribute("book", bookDAO.showOne(id));
 
+        Optional<Person> bookOwner = bookDAO.getBookOwner(id);
+
+        if (bookOwner.isPresent()) {
+            model.addAttribute("owner", bookOwner.get());
+            //если у книга у человека, показываем его
+        } else {
+            model.addAttribute("people", personDAO.showAll());
+            //если нет, то передаем список людей, для выбора из списка
+        }
+
         return "books/one";
     }
 
@@ -50,7 +64,12 @@ public class BookController {
 
     @PostMapping()
     /*добавляем на сервере*/
-    public String create(@ModelAttribute("book")  Book book) {
+    public String create(@ModelAttribute("book") @Valid Book book,
+                         BindingResult bindingResult/*если будет ошибка, она поместиться сюда*/) {
+
+        if (bindingResult.hasErrors()) {//если есть ошибка будет выполнено...
+            return "books/new";
+        }
 
         bookDAO.save(book);
         return "redirect:/books";
@@ -64,7 +83,13 @@ public class BookController {
 
     @PatchMapping("/{id}")
     /*изменяем на сервере*/
-    public String updateBook(@ModelAttribute("book") Book book, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("book") @Valid Book book,
+                         BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
 
         bookDAO.update(id, book);
         return "redirect:/books";
@@ -72,8 +97,20 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     /*удаялем на сервере*/
-    public String deleteBook(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id) {
+        bookDAO.release(id);
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
+        bookDAO.assign(id, selectedPerson);
+        return "redirect:/books/" + id;
     }
 }

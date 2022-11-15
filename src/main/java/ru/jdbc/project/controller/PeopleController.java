@@ -3,9 +3,12 @@ package ru.jdbc.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.jdbc.project.DAO.PersonDAO;
 import ru.jdbc.project.model.Person;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -28,6 +31,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String showOne(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personDAO.showOne(id));
+        model.addAttribute("books", personDAO.getBooksByPersonId(id));//при отображении человека нужно же ще получить его список книг
 
         return "people/one";
     }
@@ -38,7 +42,12 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("person") Person person) {
+    public String create(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        }
 
         personDAO.save(person);
         return "redirect:/people";
@@ -51,8 +60,13 @@ public class PeopleController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person,
+    public String update(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult,
                          @PathVariable("id") int id) {
+
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
 
         personDAO.update(id, person);
         return "redirect:/people";
