@@ -2,12 +2,14 @@ package ru.jdbc.project.DAO;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import ru.jdbc.project.model.Book;
 import ru.jdbc.project.model.Person;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class BookDAO {
 
     private final JdbcTemplate jdbcTemplate;
