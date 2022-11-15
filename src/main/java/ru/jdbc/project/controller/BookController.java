@@ -9,6 +9,7 @@ import ru.jdbc.project.DAO.BookDAO;
 import ru.jdbc.project.DAO.PersonDAO;
 import ru.jdbc.project.model.Book;
 import ru.jdbc.project.model.Person;
+import ru.jdbc.project.util.BookValidator;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -20,11 +21,13 @@ import java.util.Optional;
 public class BookController {
     private BookDAO bookDAO;
     private PersonDAO personDAO;
+    private BookValidator bookValidator;
 
     @Autowired
-    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
+    public BookController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.personDAO = personDAO;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping
@@ -67,6 +70,8 @@ public class BookController {
     public String create(@ModelAttribute("book") @Valid Book book,
                          BindingResult bindingResult/*если будет ошибка, она поместиться сюда*/) {
 
+        bookValidator.validate(book, bindingResult);
+
         if (bindingResult.hasErrors()) {//если есть ошибка будет выполнено...
             return "books/new";
         }
@@ -86,6 +91,8 @@ public class BookController {
     public String update(@ModelAttribute("book") @Valid Book book,
                          BindingResult bindingResult,
                          @PathVariable("id") int id) {
+
+        bookValidator.validate(book, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "books/edit";
