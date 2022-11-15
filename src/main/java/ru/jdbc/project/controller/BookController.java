@@ -19,9 +19,9 @@ import java.util.Optional;
 @RequestMapping("/books")
 //дефолтный запрос
 public class BookController {
-    private BookDAO bookDAO;
-    private PersonDAO personDAO;
-    private BookValidator bookValidator;
+    private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
+    private final BookValidator bookValidator;
 
     @Autowired
     public BookController(BookDAO bookDAO, PersonDAO personDAO, BookValidator bookValidator) {
