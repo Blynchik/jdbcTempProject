@@ -1,9 +1,14 @@
 package ru.jdbc.project.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-//import javax.servlet.ServletContext;
-//import javax.servlet.ServletException;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import java.util.EnumSet;
 
 public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     //заменяет web.xml
@@ -23,27 +28,27 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
         return new String[]{"/"};//все запросы отправлем через знак на диспатчер сервлет
     }
 
-//    private void registerCharacterEncodingFilter(ServletContext aContext) {//подключение коировки (русский язык)
-//        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
-//
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//
-//        FilterRegistration.Dynamic characterEncoding = aContext.addFilter("characterEncoding", characterEncodingFilter);
-//        characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
-//    }
+    private void registerCharacterEncodingFilter(ServletContext aContext) {//подключение коировки (русский язык)
+        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 
-//    @Override
-//    public void onStartup(ServletContext aServletContext) throws ServletException {
-//        super.onStartup(aServletContext);
-//        registerCharacterEncodingFilter(aServletContext);//подключение коировки (русский язык)
-//        registerHiddenFieldFilter(aServletContext);// доп. методами patch, delete и т.д
-//    }
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
 
-//    private void registerHiddenFieldFilter(ServletContext aContext) {
-//        //добавить эти два метода, чтобы считывать скрытую строку с доп. методами patch, delete и
-//        aContext.addFilter("hiddenHttpMethodFilter",
-//                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
-//    }
+        FilterRegistration.Dynamic characterEncoding = aContext.addFilter("characterEncoding", characterEncodingFilter);
+        characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
+    }
+
+    @Override
+    public void onStartup(ServletContext aServletContext) throws ServletException {
+        super.onStartup(aServletContext);
+        registerCharacterEncodingFilter(aServletContext);//подключение коировки (русский язык)
+        registerHiddenFieldFilter(aServletContext);// доп. методами patch, delete и т.д
+    }
+
+    private void registerHiddenFieldFilter(ServletContext aContext) {
+        //добавить эти два метода, чтобы считывать скрытую строку с доп. методами patch, delete и
+        aContext.addFilter("hiddenHttpMethodFilter",
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+    }
 }
