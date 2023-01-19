@@ -1,16 +1,16 @@
 package ru.jdbc.project.model;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class Book {
 
     private int id;
-    @NotEmpty(message = "Название книги не может быть пустым")
+    @NotBlank(message = "Название книги не может быть пустым")
     @Size(min =2, max = 100, message = "Название книги должно быть от 2 до 100 символов")
     private String title;
-    @NotEmpty(message = "Имя автора не должно быть пустым")
+    @NotBlank(message = "Имя автора не должно быть пустым")
     @Size(min =2, max = 100, message = "Имя автора должно быть от 2 до 100 символов")
     private String author;
     @Min(value = 1500, message = "Год издания должен быть больше 1500")

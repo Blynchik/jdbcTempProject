@@ -1,14 +1,14 @@
 package ru.jdbc.project.model;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class Person {
 
     private int id;
-    @NotEmpty(message = "Имя не может быть пустым")
-    @Size(min = 2, max = 100, message = "Имя должено быть от 2 до 100 знаков по длине")
+    @NotBlank(message = "Имя не может быть пустым")
+    @Size(min = 2, max = 100, message = "Имя должно быть от 2 до 100 знаков по длине")
     private String name;
 
     @Min(value = 1900, message = "Год должен быть больше 1900")//в бд может быть жетское неравенство, здесь именно с этого числа включая

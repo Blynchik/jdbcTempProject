@@ -15,11 +15,11 @@
   <input type="text" th:field="*{author}" id="author"/>
   <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
   <br/>
-  <label for="year">Введите год: </label>
-  <input type="text" th:field="*{yearOfProduction}" id="year"/>
-  <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{yearOfProduction}">Year Error</div>
+  <label for="yearOfProduction">Введите год: </label>
+  <input type="text" th:field="*{yearOfProduction}" id="yearOfProduction"/>
+  <div style="color:red" th:if="${#fields.hasErrors('yearOfProduction')}" th:errors="*{yearOfProduction}">Year Error</div>
   <br/>
-  <input type="submit" value="Create!"/>
+  <input type="submit" value="Создать"/>
 </form>
 
 </body>
