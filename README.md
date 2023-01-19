@@ -47,37 +47,58 @@
 ## Страницы
 ### Список всех людей
 http://localhost:8080/people
+
 ![people](img/people.jpg)
+
 ### Добавление нового человека
 http://localhost:8080/people/new
+
 ![new](img/new.jpg)
+
 ### Редактирование данных человека
 http://localhost:8080/people/1/edit
+
 ![edit](img/edit.jpg)
+
 ### Список всех книг
 http://localhost:8080/books
+
 ![books](img/books.jpg)
+
 ### Добавление новой книги
 http://localhost:8080/books/new
+
 ![books](img/newB.jpg)
+
 ### Редактирование данных книги
 http://localhost:8080/books/1/edit
+
 ![editB](img/editB.jpg)
+
 ### Страница человека
 http://localhost:8080/people/1
 
 Без книг
+
 ![without](img/without.jpg)
+
 С книгами
+
 ![withB](img/withB.jpg)
+
 ### Страница книги
 http://localhost:8080/books/1
 
 Свободная
+
 ![withoutP](img/withoutP.jpg)
+
 Закрепленная
+
 ![withP](img/withP.jpg)
 
 ### При введении невалидных значений
+
 ![nonValidB](img/nonValidB.jpg)
+
 ![nonValidP](img/nonValidP.jpg)
