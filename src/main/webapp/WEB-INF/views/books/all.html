@@ -7,8 +7,9 @@
 <body>
 
 <div th:each="book : ${books}">
+    <!--/*@thymesVar id="getTitle" type=""*/-->
     <a th:href="@{/books/{id}(id=${book.getId()})}"
-       th:text="${book.getTitle() + ', ' + book.getAuthor()+', '+ book.getYear()}">user</a>
+       th:text="${book.getTitle() + ', ' + book.getAuthor()+', '+ book.getYearOfProduction()}">user</a>
 </div>
 <br/>
 <hr/>

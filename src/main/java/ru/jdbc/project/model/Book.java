@@ -14,17 +14,25 @@ public class Book {
     @Size(min =2, max = 100, message = "Имя автора должно быть от 2 до 100 символов")
     private String author;
     @Min(value = 1500, message = "Год издания должен быть больше 1500")
-    private int year;
+    private int yearOfProduction;
 
-    public Book() {
+    public Book(){
+
     }
 
-    public Book(String title, String author, int year) {
+    public Book(String title, String author, int yearOfProduction) {
         this.title = title;
         this.author = author;
-        this.year = year;
+        this.yearOfProduction = yearOfProduction;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -42,19 +50,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getYear() {
-        return year;
+    public int getYearOfProduction() {
+        return yearOfProduction;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setYearOfProduction(int yearOfProduction) {
+        this.yearOfProduction = yearOfProduction;
     }
 }
