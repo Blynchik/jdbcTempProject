@@ -44,6 +44,8 @@
 9. Все поля должны валидироваться - с помощью @Valid и Spring Validator, если это
 требуется.
 
+### Стэк: Spring JdbcTemplate, Spring Validator, PostgreSQL, Thymeleaf
+
 ## Страницы
 ### Список всех людей
 http://localhost:8080/people
